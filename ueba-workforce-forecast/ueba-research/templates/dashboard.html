@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard UEBA</title>
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        margin: 2rem;
+        background: #f7f7f9;
+        color: #222;
+    }
+    h1 {
+        margin-bottom: 0.25rem;
+    }
+    .compteur {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+        color: #444;
+    }
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        background: #fff;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    th, td {
+        padding: 0.5rem 0.75rem;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+    }
+    th {
+        background: #2c3e50;
+        color: #fff;
+        position: sticky;
+        top: 0;
+    }
+    tr:hover {
+        background: #f1f5f9;
+    }
+    tr.suspect {
+        background: #fdf0ef;
+    }
+    .badge {
+        display: inline-block;
+        padding: 0.2rem 0.6rem;
+        border-radius: 999px;
+        font-size: 0.85rem;
+        font-weight: bold;
+        color: #fff;
+    }
+    .badge-suspect {
+        background: #e74c3c;
+    }
+    .badge-normal {
+        background: #27ae60;
+    }
+</style>
+</head>
+<body>
+    <h1>Dashboard UEBA — Détection d'anomalies</h1>
+    <p class="compteur">{{ nb_suspectes }} actions suspectes sur {{ nb_total }} au total</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Département</th>
+                <th>Date</th>
+                <th>Heure connexion</th>
+                <th>Fiches consultées</th>
+                <th>Hors département</th>
+                <th>Score confiance</th>
+                <th>Statut</th>
+                <th>Raison de l'alerte</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ligne in lignes %}
+            <tr class="{{ 'suspect' if ligne.est_suspect else '' }}">
+                <td>{{ ligne.nom }}</td>
+                <td>{{ ligne.departement }}</td>
+                <td>{{ ligne.date }}</td>
+                <td>{{ ligne.heure_connexion }}</td>
+                <td>{{ ligne.nb_fiches_consultees }}</td>
+                <td>{{ "Oui" if ligne.hors_departement else "Non" }}</td>
+                <td>{{ ligne.score_confiance }}</td>
+                <td>
+                    {% if ligne.est_suspect %}
+                        <span class="badge badge-suspect">Suspect</span>
+                    {% else %}
+                        <span class="badge badge-normal">Normal</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if ligne.raison_alerte %}
+                        {{ ligne.raison_alerte
+                            .replace("modele_isolation_forest", "Modèle Isolation Forest")
+                            .replace("nouveaute_cible", "Nouveauté de cible")
+                            .replace(",", " + ") }}
+                    {% else %}
+                        —
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

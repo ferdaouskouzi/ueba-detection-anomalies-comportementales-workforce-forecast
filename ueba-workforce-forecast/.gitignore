@@ -1,0 +1,23 @@
+# Dépendances
+node_modules/
+venv/
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Build
+dist/
+tsconfig.tsbuildinfo
+
+# Secrets et données locales : ne jamais versionner
+.env
+*.db
+*.db.bak-*
+CREDENTIALS_DEMO*.md
+
+# Outils locaux
+.claude/
+.playwright-cli/

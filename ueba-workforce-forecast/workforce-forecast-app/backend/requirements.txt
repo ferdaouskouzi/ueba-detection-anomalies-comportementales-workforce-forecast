@@ -1,0 +1,23 @@
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+sqlalchemy==2.0.35
+pydantic==2.9.2
+argon2-cffi==23.1.0
+pyjwt==2.9.0
+pyotp==2.9.0
+qrcode[pil]==7.4.2
+python-dotenv==1.0.1
+openpyxl==3.1.5
+python-multipart==0.0.32
+pytest==8.3.3
+httpx==0.28.1
+
+# --- Module UEBA (backend/ueba/) : chargement du modèle Isolation Forest ------
+# Versions alignées sur celles ayant produit modele_isolation_forest.joblib
+# (dépôt UEBA-Detection-Anomalies-RH) pour éviter tout avertissement de
+# dé-sérialisation joblib inter-versions.
+scikit-learn==1.7.2
+scipy==1.15.3
+numpy==2.2.6
+pandas==2.3.3
+joblib==1.5.3

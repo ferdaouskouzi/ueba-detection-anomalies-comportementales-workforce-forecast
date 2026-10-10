@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+backend/venv/
+
+# Python bytecode / caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Build caches (build output in dist/ is intentionally committed for the demo)
+tsconfig.tsbuildinfo
+
+# Environment
+.env
+
+# Local database backups (workforce.db itself is recreated by `python -m app.seed`)
+backend/*.db.bak-*
+
+# Secrets / sensitive demo data — never versioned again (see docs/adr/0002-*.md).
+# workforce.db carries real Argon2id hashes; CREDENTIALS_DEMO*.md carries plaintext
+# passwords in clear. Both were committed in the past and rotated/purged as a result —
+# recreate locally with `python -m app.seed`, never re-add either to git.
+backend/workforce.db
+backend/CREDENTIALS_DEMO.md
+backend/CREDENTIALS_DEMO_ROTATED.md
